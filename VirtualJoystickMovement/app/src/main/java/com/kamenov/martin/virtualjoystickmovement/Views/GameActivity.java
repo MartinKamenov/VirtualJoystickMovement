@@ -10,8 +10,11 @@ import android.widget.RelativeLayout;
 import com.kamenov.martin.virtualjoystickmovement.R;
 import com.kamenov.martin.virtualjoystickmovement.constants.Constants;
 import com.kamenov.martin.virtualjoystickmovement.engine.GamePanel;
+import com.kamenov.martin.virtualjoystickmovement.engine.joystickService.JoystickPanel;
 import com.kamenov.martin.virtualjoystickmovement.engine.services.DrawingService;
+import com.kamenov.martin.virtualjoystickmovement.engine.services.PaintService;
 import com.kamenov.martin.virtualjoystickmovement.engine.services.SortingService;
+import com.kamenov.martin.virtualjoystickmovement.engine.services.factories.FigureFactory;
 
 public class GameActivity extends Activity {
 
@@ -30,7 +33,10 @@ public class GameActivity extends Activity {
         Constants.SCREEN_HEIGHT = dm.heightPixels;
         RelativeLayout relativeLayout = findViewById(R.id.container);
         drawingService = DrawingService.getInstance(SortingService.getInstance());
-        gamePanel = new GamePanel(this, drawingService);
+//        FigureFactory figureFactory = FigureFactory.getInstance();
+//        figureFactory.createCube(0, 0, 0, 50, PaintService.createEdgePaint("red")
+//        , PaintService.createWallPaint("white"), 1);
+        gamePanel = new JoystickPanel(this, drawingService);
         relativeLayout.addView(gamePanel);
     }
 }
