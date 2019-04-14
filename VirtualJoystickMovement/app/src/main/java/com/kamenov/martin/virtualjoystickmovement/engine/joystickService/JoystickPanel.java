@@ -30,8 +30,8 @@ public class JoystickPanel extends GamePanel {
         x2 = -1;
         this.centerX = centerX;
         this.centerY = centerY;
-        joystickModel = new JoystickModel(Constants.SCREEN_WIDTH / 2,
-                Constants.SCREEN_HEIGHT / 2, 50,
+        joystickModel = new JoystickModel(centerX,
+                centerY, centerX, centerY, 50,
                 PaintService.createEdgePaint("white"),
                 PaintService.createWallPaint("red"));
 
@@ -56,9 +56,7 @@ public class JoystickPanel extends GamePanel {
                 draw();
                 break;
             case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                y2 = event.getY();
-                joystickModel.changePosition(x2, y2);
+                joystickModel.changePosition(centerX, centerY);
                 draw();
                 break;
         }

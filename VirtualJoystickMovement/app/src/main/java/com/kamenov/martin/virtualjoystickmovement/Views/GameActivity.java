@@ -3,8 +3,10 @@ package com.kamenov.martin.virtualjoystickmovement.Views;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.kamenov.martin.virtualjoystickmovement.R;
@@ -20,6 +22,7 @@ public class GameActivity extends Activity {
 
     private DrawingService drawingService;
     private GamePanel gamePanel;
+    private JoystickPanel joystickPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +34,19 @@ public class GameActivity extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         Constants.SCREEN_WIDTH = dm.widthPixels;
         Constants.SCREEN_HEIGHT = dm.heightPixels;
-        RelativeLayout relativeLayout = findViewById(R.id.container);
+        LinearLayout gameContainer = findViewById(R.id.container);
         drawingService = DrawingService.getInstance(SortingService.getInstance());
-//        FigureFactory figureFactory = FigureFactory.getInstance();
-//        figureFactory.createCube(0, 0, 0, 50, PaintService.createEdgePaint("red")
-//        , PaintService.createWallPaint("white"), 1);
-        gamePanel = new JoystickPanel(this, drawingService);
-        relativeLayout.addView(gamePanel);
+        FigureFactory figureFactory = FigureFactory.getInstance();
+        figureFactory.createCube(0, -Constants.SCREEN_HEIGHT / 4,
+                0, 50,
+                PaintService.createEdgePaint("red")
+        , PaintService.createWallPaint("white"), 1);
+        gamePanel = new GamePanel(this, drawingService);
+        gameContainer.addView(gamePanel);
+        gamePanel.getLayoutParams().height = Constants.SCREEN_HEIGHT / 2;
+
+        joystickPanel = new JoystickPanel(this, drawingService,
+                Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 4);
+        gameContainer.addView(joystickPanel);
     }
 }

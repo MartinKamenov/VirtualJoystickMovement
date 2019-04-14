@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".Views.GameActivity">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
