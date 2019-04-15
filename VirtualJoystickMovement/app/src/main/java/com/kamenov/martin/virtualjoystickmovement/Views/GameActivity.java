@@ -1,6 +1,7 @@
 package com.kamenov.martin.virtualjoystickmovement.Views;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -53,7 +54,7 @@ public class GameActivity extends Activity {
         objects.add(person);
 
         figureFactory.setFigures(objects);
-        gamePanel = new GamePanel(this, drawingService);
+        //gamePanel = new GamePanel(this, drawingService);
         //gameContainer.addView(gamePanel);
 
         joystickPanel = new JoystickPanel(this, drawingService,
@@ -64,9 +65,9 @@ public class GameActivity extends Activity {
         joystickPanel.getLayoutParams().width = Constants.SCREEN_WIDTH / 2;
         RelativeLayout.LayoutParams joystickParams = (RelativeLayout.LayoutParams) joystickPanel.getLayoutParams();
         joystickParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        joystickParams.addRule(RelativeLayout.ALIGN_RIGHT);
+        joystickParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         joystickPanel.setLayoutParams(joystickParams);
-        gameContainer.bringChildToFront(joystickPanel);
+        joystickPanel.bringToFront();
 
     }
 }
