@@ -2,18 +2,11 @@ package com.kamenov.martin.virtualjoystickmovement.engine.joystickService;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.view.MotionEvent;
 
-import com.kamenov.martin.virtualjoystickmovement.constants.Constants;
 import com.kamenov.martin.virtualjoystickmovement.engine.GamePanel;
-import com.kamenov.martin.virtualjoystickmovement.engine.models.game_objects.contracts.Object3D;
-import com.kamenov.martin.virtualjoystickmovement.engine.services.CanvasService;
 import com.kamenov.martin.virtualjoystickmovement.engine.services.DrawingService;
 import com.kamenov.martin.virtualjoystickmovement.engine.services.PaintService;
-import com.kamenov.martin.virtualjoystickmovement.engine.services.factories.FigureFactory;
-
-import java.util.ArrayList;
 
 public class JoystickPanel extends GamePanel {
     private final JoystickModel joystickModel;

@@ -3,6 +3,7 @@ package com.kamenov.martin.virtualjoystickmovement.Views;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,10 +14,14 @@ import com.kamenov.martin.virtualjoystickmovement.R;
 import com.kamenov.martin.virtualjoystickmovement.constants.Constants;
 import com.kamenov.martin.virtualjoystickmovement.engine.GamePanel;
 import com.kamenov.martin.virtualjoystickmovement.engine.joystickService.JoystickPanel;
+import com.kamenov.martin.virtualjoystickmovement.engine.models.game_objects.contracts.Object3D;
+import com.kamenov.martin.virtualjoystickmovement.engine.personModel.PersonModel;
 import com.kamenov.martin.virtualjoystickmovement.engine.services.DrawingService;
 import com.kamenov.martin.virtualjoystickmovement.engine.services.PaintService;
 import com.kamenov.martin.virtualjoystickmovement.engine.services.SortingService;
 import com.kamenov.martin.virtualjoystickmovement.engine.services.factories.FigureFactory;
+
+import java.util.ArrayList;
 
 public class GameActivity extends Activity {
 
@@ -34,19 +39,34 @@ public class GameActivity extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         Constants.SCREEN_WIDTH = dm.widthPixels;
         Constants.SCREEN_HEIGHT = dm.heightPixels;
-        LinearLayout gameContainer = findViewById(R.id.container);
+        RelativeLayout gameContainer = findViewById(R.id.container);
         drawingService = DrawingService.getInstance(SortingService.getInstance());
         FigureFactory figureFactory = FigureFactory.getInstance();
-        figureFactory.createCube(0, -Constants.SCREEN_HEIGHT / 4,
-                0, 50,
-                PaintService.createEdgePaint("red")
-        , PaintService.createWallPaint("white"), 1);
+        ArrayList<Object3D> objects = new ArrayList<>();
+        PersonModel person = new PersonModel(Constants.SCREEN_WIDTH / 2,
+                Constants.SCREEN_HEIGHT / 2,
+                0,
+                PaintService.createEdgePaint("red"),
+                PaintService.createWallPaint("white"),
+                1,
+                100);
+        objects.add(person);
+
+        figureFactory.setFigures(objects);
         gamePanel = new GamePanel(this, drawingService);
-        gameContainer.addView(gamePanel);
-        gamePanel.getLayoutParams().height = Constants.SCREEN_HEIGHT / 2;
+        //gameContainer.addView(gamePanel);
 
         joystickPanel = new JoystickPanel(this, drawingService,
-                Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 4);
+                Constants.SCREEN_WIDTH / 4, Constants.SCREEN_WIDTH / 4);
         gameContainer.addView(joystickPanel);
+
+        joystickPanel.getLayoutParams().height = Constants.SCREEN_WIDTH / 2;
+        joystickPanel.getLayoutParams().width = Constants.SCREEN_WIDTH / 2;
+        RelativeLayout.LayoutParams joystickParams = (RelativeLayout.LayoutParams) joystickPanel.getLayoutParams();
+        joystickParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        joystickParams.addRule(RelativeLayout.ALIGN_RIGHT);
+        joystickPanel.setLayoutParams(joystickParams);
+        gameContainer.bringChildToFront(joystickPanel);
+
     }
 }
