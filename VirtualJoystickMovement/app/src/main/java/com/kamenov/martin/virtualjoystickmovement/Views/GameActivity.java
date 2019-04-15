@@ -57,8 +57,12 @@ public class GameActivity extends Activity {
         //gamePanel = new GamePanel(this, drawingService);
         //gameContainer.addView(gamePanel);
 
-        joystickPanel = new JoystickPanel(this, drawingService,
-                Constants.SCREEN_WIDTH / 4, Constants.SCREEN_WIDTH / 4);
+        joystickPanel = new JoystickPanel(
+                this,
+                drawingService,
+                Constants.SCREEN_WIDTH / 4,
+                Constants.SCREEN_WIDTH / 4,
+                50);
         gameContainer.addView(joystickPanel);
 
         joystickPanel.getLayoutParams().height = Constants.SCREEN_WIDTH / 2;

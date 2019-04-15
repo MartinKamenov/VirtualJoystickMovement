@@ -8,19 +8,22 @@ import com.kamenov.martin.virtualjoystickmovement.engine.GamePanel;
 import com.kamenov.martin.virtualjoystickmovement.engine.services.DrawingService;
 import com.kamenov.martin.virtualjoystickmovement.engine.services.PaintService;
 
+import java.util.ArrayList;
+
 public class JoystickPanel extends GamePanel {
     private final JoystickModel joystickModel;
+    private final float size;
     private float centerX;
     private float centerY;
     private float x1;
     private float y1;
-    private float x2;
-    private float y2;
 
-    public JoystickPanel(Context context, DrawingService drawingService, float centerX, float centerY) {
+    public JoystickPanel(Context context, DrawingService drawingService, float centerX, float centerY, float size) {
         super(context, drawingService);
+        this.figures = new ArrayList<>();
         x1 = -1;
-        x2 = -1;
+        y1 = -1;
+        this.size = size;
         this.centerX = centerX;
         this.centerY = centerY;
         joystickModel = new JoystickModel(centerX,
@@ -37,15 +40,13 @@ public class JoystickPanel extends GamePanel {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
                 x1 = event.getX();
                 y1 = event.getY();
+                if(isMotionOutOfBounds(x1, y1)) {
+                    return true;
+                }
                 joystickModel.changePosition(x1, y1);
-                draw();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                x2 = event.getX();
-                y2 = event.getY();
-                joystickModel.changePosition(x2, y2);
                 draw();
                 break;
             case MotionEvent.ACTION_UP:
@@ -60,5 +61,16 @@ public class JoystickPanel extends GamePanel {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         joystickModel.draw(canvas);
+    }
+
+    @Override
+    public void update() {}
+
+    private boolean isMotionOutOfBounds(float x, float y) {
+        float diffX = Math.abs(x - centerX);
+        float diffY = Math.abs(y - centerY);
+
+        float distance = (float) Math.sqrt(diffX * diffX + diffY * diffY);
+        return distance > this.size * 2;
     }
 }

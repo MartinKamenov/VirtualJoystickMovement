@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, GameObject {
-    private ArrayList<Object3D> figures;
+    protected ArrayList<Object3D> figures;
     private DrawingService drawingService;
     private GameThread thread;
     private GameObject background;
