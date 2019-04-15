@@ -50,28 +50,28 @@ public class GameActivity extends Activity {
                 PaintService.createEdgePaint("red"),
                 PaintService.createWallPaint("white"),
                 1,
-                100);
+                200);
         objects.add(person);
 
         figureFactory.setFigures(objects);
-        //gamePanel = new GamePanel(this, drawingService);
-        //gameContainer.addView(gamePanel);
+        gamePanel = new GamePanel(this, drawingService);
+        gameContainer.addView(gamePanel);
 
-        joystickPanel = new JoystickPanel(
-                this,
-                drawingService,
-                Constants.SCREEN_WIDTH / 4,
-                Constants.SCREEN_WIDTH / 4,
-                50);
-        gameContainer.addView(joystickPanel);
-
-        joystickPanel.getLayoutParams().height = Constants.SCREEN_WIDTH / 2;
-        joystickPanel.getLayoutParams().width = Constants.SCREEN_WIDTH / 2;
-        RelativeLayout.LayoutParams joystickParams = (RelativeLayout.LayoutParams) joystickPanel.getLayoutParams();
-        joystickParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        joystickParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        joystickPanel.setLayoutParams(joystickParams);
-        joystickPanel.bringToFront();
+//        joystickPanel = new JoystickPanel(
+//                this,
+//                drawingService,
+//                Constants.SCREEN_WIDTH / 4,
+//                Constants.SCREEN_WIDTH / 4,
+//                50);
+//        gameContainer.addView(joystickPanel);
+//
+//        joystickPanel.getLayoutParams().height = Constants.SCREEN_WIDTH / 2;
+//        joystickPanel.getLayoutParams().width = Constants.SCREEN_WIDTH / 2;
+//        RelativeLayout.LayoutParams joystickParams = (RelativeLayout.LayoutParams) joystickPanel.getLayoutParams();
+//        joystickParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+//        joystickParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+//        joystickPanel.setLayoutParams(joystickParams);
+//        joystickPanel.bringToFront();
 
     }
 }
