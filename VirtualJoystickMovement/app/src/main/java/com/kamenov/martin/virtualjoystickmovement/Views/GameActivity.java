@@ -3,11 +3,13 @@ package com.kamenov.martin.virtualjoystickmovement.Views;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -43,6 +45,23 @@ public class GameActivity extends Activity {
         RelativeLayout gameContainer = findViewById(R.id.container);
         drawingService = DrawingService.getInstance(SortingService.getInstance());
         FigureFactory figureFactory = FigureFactory.getInstance();
+
+        joystickPanel = new JoystickPanel(
+                this,
+                drawingService,
+                Constants.SCREEN_WIDTH / 4,
+                Constants.SCREEN_WIDTH / 4,
+                50);
+        gameContainer.addView(joystickPanel);
+
+        joystickPanel.getLayoutParams().height = Constants.SCREEN_WIDTH / 2;
+        joystickPanel.getLayoutParams().width = Constants.SCREEN_WIDTH / 2;
+        RelativeLayout.LayoutParams joystickParams = (RelativeLayout.LayoutParams) joystickPanel.getLayoutParams();
+        joystickParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        joystickParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        joystickPanel.setLayoutParams(joystickParams);
+        ViewCompat.setTranslationZ(joystickPanel, 1);
+
         ArrayList<Object3D> objects = new ArrayList<>();
         PersonModel person = new PersonModel(Constants.SCREEN_WIDTH / 2,
                 Constants.SCREEN_HEIGHT / 2,
@@ -55,23 +74,8 @@ public class GameActivity extends Activity {
 
         figureFactory.setFigures(objects);
         gamePanel = new GamePanel(this, drawingService);
+
         gameContainer.addView(gamePanel);
-
-//        joystickPanel = new JoystickPanel(
-//                this,
-//                drawingService,
-//                Constants.SCREEN_WIDTH / 4,
-//                Constants.SCREEN_WIDTH / 4,
-//                50);
-//        gameContainer.addView(joystickPanel);
-//
-//        joystickPanel.getLayoutParams().height = Constants.SCREEN_WIDTH / 2;
-//        joystickPanel.getLayoutParams().width = Constants.SCREEN_WIDTH / 2;
-//        RelativeLayout.LayoutParams joystickParams = (RelativeLayout.LayoutParams) joystickPanel.getLayoutParams();
-//        joystickParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//        joystickParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-//        joystickPanel.setLayoutParams(joystickParams);
-//        joystickPanel.bringToFront();
-
+        ViewCompat.setTranslationZ(gamePanel, 0);
     }
 }
