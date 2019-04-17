@@ -75,6 +75,8 @@ public class GameActivity extends Activity {
         figureFactory.setFigures(objects);
         gamePanel = new GamePanel(this, drawingService);
 
+        joystickPanel.addMovableObjects(objects);
+
         gameContainer.addView(gamePanel);
         ViewCompat.setTranslationZ(gamePanel, 0);
     }
