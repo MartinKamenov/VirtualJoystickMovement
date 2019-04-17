@@ -19,7 +19,7 @@ public class JoystickPanel extends GamePanel {
     private float centerY;
     private float x1;
     private float y1;
-    public float speedCoef = 0.05f;
+    public float speedCoef = 0.1f;
 
     public JoystickPanel(Context context, DrawingService drawingService, float centerX, float centerY, float size) {
         super(context, drawingService);
@@ -49,14 +49,12 @@ public class JoystickPanel extends GamePanel {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                x1 = event.getX();
-                y1 = event.getY();
                 if(isMotionOutOfBounds(x1, y1)) {
                     return true;
                 }
+                x1 = event.getX();
+                y1 = event.getY();
                 joystickModel.changePosition(x1, y1);
-                move(speedCoef * (centerX - x1), MovingDirection.Left);
-                move(speedCoef * (centerY - y1), MovingDirection.Up);
                 draw();
                 break;
             case MotionEvent.ACTION_UP:
@@ -77,10 +75,14 @@ public class JoystickPanel extends GamePanel {
 
     @Override
     public void update() {
-        for(int i = 0; i < figures.size(); i++) {
-            move(speedCoef * (centerX - x1), MovingDirection.Left);
-            move(speedCoef * (centerY - y1), MovingDirection.Up);
+        float diffX = centerX - x1;
+        float diffY = centerY - y1;
+        if(diffX == 0 && diffY == 0) {
+            return;
         }
+
+        move(speedCoef * diffX, MovingDirection.Left);
+        move(speedCoef * diffY, MovingDirection.Up);
     }
 
     public void move(float pixels, MovingDirection movingDirection) {
